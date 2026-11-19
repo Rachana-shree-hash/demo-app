@@ -2,34 +2,50 @@ pipeline {
     agent any
 
     tools {
-        maven 'Maven3'
-        jdk 'JDK17'
+        maven 'Maven'
+        jdk 'JDK25'
     }
 
     stages {
 
+        // Stage 1: Checkout source code
         stage('Checkout') {
             steps {
-                checkout scm
+                git branch: 'main',
+                    url: 'https://github.com/Naveen04jan/ven.git',
+                    credentialsId: 'Github-Token'
+
+                echo 'Source code downloaded successfully'
             }
         }
 
+        // Stage 2: Build the application
         stage('Build') {
             steps {
                 bat 'mvn clean compile'
             }
         }
 
+        // Stage 3: Execute test cases
         stage('Test') {
             steps {
                 bat 'mvn test'
             }
         }
 
+        // Stage 4: Package the application
         stage('Package') {
             steps {
                 bat 'mvn package'
             }
         }
+
+        // Stage 5: Run the application
+        stage('Run Application') {
+            steps {
+                bat 'mvn exec:java -Dexec.mainClass="com.example.app.App"'
+            }
+        }
     }
+
 }
