@@ -12,7 +12,7 @@ pipeline {
         stage('Checkout') {
             steps {
                 git branch: 'main',
-                    url: 'https://github.com/Naveen04jan/ven.git',
+                    url: 'https://github.com/Rachana-shree-hash/demo-app.git',
                     credentialsId: 'Github-Token'
 
                 echo 'Source code downloaded successfully'
